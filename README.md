@@ -5,3 +5,4 @@ The Pomodoro Method is a productivity technique that is used to manage time. The
 
 ![alt text](https://raw.githubusercontent.com/Megachin502/Pomodoro-Timer/master/src/imagePomoTimer.png)
 
+[a link](https://github.com/user/repo/blob/branch/other_file.md)
