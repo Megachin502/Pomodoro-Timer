@@ -2,9 +2,8 @@ import java.awt.event.*; //For action listener
 import java.awt.*;
 import javax.swing.*; //For GUI
 import javax.swing.border.TitledBorder;
-import java.io.File;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 class Content extends JPanel{
 	private JPanel panel1, panel2, panel3;
@@ -23,7 +22,6 @@ class Content extends JPanel{
 	private int tempTime = breakSecondsDesired;
 	private int tempTime2 = breakMinutesDesired;
 
-	
 	public Content(){
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		timer = new Timer(1000, new ButtonListener());
@@ -80,6 +78,15 @@ class Content extends JPanel{
 		public void keyTyped(KeyEvent event) {
 		}
 	}
+	private void playSound(){
+		try {
+	        java.io.InputStream inputStream = getClass().getResourceAsStream("/basic_bell.wav");
+	        AudioStream audioStream = new AudioStream(inputStream);
+	        AudioPlayer.player.start(audioStream);
+	    } catch (Exception exc) {
+	    	exc.printStackTrace(System.out);
+	    }
+	}
 	private class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == stop){
@@ -118,16 +125,7 @@ class Content extends JPanel{
 				if(minutesCounter1 == workMinutesDesired){
 					soundCounter1++;
 					if(soundCounter1 == 1){
-						try
-					    {
-					        Clip clip = AudioSystem.getClip();
-					        clip.open(AudioSystem.getAudioInputStream(new File("./src/basic_bell.wav")));
-					        clip.start();
-					    }
-					    catch (Exception exc)
-					    {
-					        exc.printStackTrace(System.out);
-					    }
+						playSound();
 					}
 					panel1.setBackground(Color.white);
 					screen1.setText(workMinutesDesired + "m 00s");
@@ -143,16 +141,7 @@ class Content extends JPanel{
 						if(minutesCounter2 == breakMinutesDesired){
 							soundCounter2++;
 							if(soundCounter2 == 1){
-								try
-							    {
-							        Clip clip = AudioSystem.getClip();
-							        clip.open(AudioSystem.getAudioInputStream(new File("./src/basic_bell.wav")));
-							        clip.start();
-							    }
-							    catch (Exception exc)
-							    {
-							        exc.printStackTrace(System.out);
-							    }
+								playSound();
 							}
 							secondsCounter1 = 0;
 							secondsCounter2 = 0;
